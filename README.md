@@ -2,7 +2,7 @@
 
 ## Installation:
 
-setup .venv: `python -m venv .venv`
-acivate .venv: `.venv/Scripts/activate`
-run `pip install -e ".[dev]"`
-run `playwright install`
+1) setup .venv: `python -m venv .venv`
+2) acivate .venv: `.venv/Scripts/activate`
+3) run `pip install -e ".[dev]"`
+4) run `playwright install`
