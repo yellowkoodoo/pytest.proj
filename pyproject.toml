@@ -5,13 +5,19 @@ build-backend = "hatchling.build"
 [project]
 name = "pytest.proj"
 version = "1.0.0"
-requires-python = ">=3.14.5"
-dependencies = []
+requires-python = ">=3.11"
+
+dependencies = [
+    "pytest>=8.4.0",
+    "playwright>=1.54.0",    
+    "pytest-playwright>=0.7.0",
+    "pytest-html>=4.1.1",
+    "python-dotenv>=1.1.0"
+]
 
 [project.optional-dependencies]
 dev = [
-    "pytest",
-    "pytest-playwright",
+    ""
 ]
 
 [tool.hatch.build.targets.wheel]

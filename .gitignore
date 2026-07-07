@@ -1,9 +1,11 @@
 .venv/
 __pycache__/
-.coverage
-htmlcov/
-dist/
-*.egg-info/
+
+# .env
+.env
+config/.env.*
+!config/.env.example
+
 # Playwright
 test-results/
 playwright-report/
