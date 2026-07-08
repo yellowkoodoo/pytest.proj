@@ -19,10 +19,10 @@ class Settings:
 
     # Application
     BASE_URLS = {
-        "dev": "https://dev.example.com",
-        "qa": "https://qa.example.com",
-        "staging": "https://staging.example.com",
-        "prod": "https://example.com"
+        "dev": "http://localhost:3000/",
+        "qa": "http://localhost:3000/",
+        "staging": "http://localhost:3000/",
+        "prod": "http://localhost:3000/"
     }
 
     @property
