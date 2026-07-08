@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  api:
+    build: ./api
+    container_name: qa_sandbox_api
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  ui:
+    build: ./ui
+    container_name: qa_sandbox_ui
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+networks:
+  default:
+    name: qa_sandbox_network

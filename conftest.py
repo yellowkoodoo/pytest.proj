@@ -1,7 +1,7 @@
 import pytest
 from playwright.sync_api import Browser, BrowserContext, Page
 
-from config.settings import settings
+from config.settings import runnerSettings, settings
 
 # @pytest.fixture(scope="session")
 # def browser_type_launch_args():
@@ -28,6 +28,16 @@ from config.settings import settings
 #         "permissions": ["geolocation"],
 #         "storage_state": "auth.json",
 #     }
+
+@pytest.fixture(scope="session")
+def browser_name(pytestconfig):
+    browser = pytestconfig.getoption("--browser")
+
+    # If --browser was provided, respect it.
+    if browser:
+        return browser
+
+    return runnerSettings.DEFAULT_BROWSER
 
 
 @pytest.fixture
