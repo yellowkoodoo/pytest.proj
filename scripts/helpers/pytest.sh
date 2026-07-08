@@ -2,7 +2,12 @@
 
 set -e
 
-source scripts/helpers/browser.sh
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+
+source "$SCRIPT_DIR/browser.sh"
+cd "$PROJECT_ROOT"
+
 
 export BROWSER=${BROWSER:-$(get_default_browser)}
 export HEADLESS=${HEADLESS:-$(get_default_headless)}
