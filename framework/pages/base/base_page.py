@@ -10,3 +10,6 @@ class BasePage:
     def open(self):
         self.page.goto(self.URL)
         self.page.wait_for_load_state("networkidle")
+
+    def _testid(self, test_id: str):
+        return self.page.locator(f"[data-testid='{test_id}']")

@@ -9,12 +9,18 @@ class LoginPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        self.username_input = page.locator("[data-testid='email-input']")
-        self.password_input = page.locator("[data-testid='password-input']")
-        self.login_button = page.locator("[data-testid='login-btn']")
+        
+    @property
+    def username_input(self):
+        return self._testid("email-input")
 
-    def open(self):
-        super().open()        
+    @property
+    def password_input(self):
+        return self._testid("password-input")
+
+    @property
+    def login_button(self):
+        return self._testid("login-btn")
 
     def login(self, username: str, password: str):
         self.username_input.fill(username)
