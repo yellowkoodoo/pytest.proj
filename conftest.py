@@ -7,7 +7,9 @@ from framework.pages.app import App
 
 @pytest.fixture
 def app(page: Page) -> App:
-    return App(page)
+    app = App(page)
+    app.open()
+    return app
 
 @pytest.fixture(scope="session")
 def base_url():
