@@ -3,6 +3,11 @@ from playwright.sync_api import Browser, BrowserContext, Page
 
 from config.settings import runnerSettings, settings
 
+
+@pytest.fixture(scope="session")
+def base_url():
+    return settings.BASE_URL
+
 # @pytest.fixture(scope="session")
 # def browser_type_launch_args():
 #     return {
@@ -33,16 +38,15 @@ from config.settings import runnerSettings, settings
 def browser_name(pytestconfig):
     browser = pytestconfig.getoption("--browser")
 
-    # If --browser was provided, respect it.
     if browser:
         return browser
 
     return runnerSettings.DEFAULT_BROWSER
 
-
 @pytest.fixture
 def context(browser: Browser):
     context = browser.new_context(
+        base_url=settings.BASE_URL,
         viewport = {
             "width": 1920,
             "height": 1080
@@ -50,7 +54,6 @@ def context(browser: Browser):
     )
     yield context
     context.close()
-
 
 @pytest.fixture
 def page(context: BrowserContext):
