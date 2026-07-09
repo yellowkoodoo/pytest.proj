@@ -11,9 +11,11 @@ def app(page: Page) -> App:
     app.open()
     return app
 
+
 @pytest.fixture(scope="session")
 def base_url():
     return settings.BASE_URL
+
 
 # @pytest.fixture(scope="session")
 # def browser_type_launch_args():
@@ -41,6 +43,7 @@ def base_url():
 #         "storage_state": "auth.json",
 #     }
 
+
 @pytest.fixture(scope="session")
 def browser_name(pytestconfig):
     browser = pytestconfig.getoption("--browser")
@@ -50,23 +53,19 @@ def browser_name(pytestconfig):
 
     return runnerSettings.DEFAULT_BROWSER
 
+
 @pytest.fixture
 def context(browser: Browser):
     context = browser.new_context(
-        base_url=settings.BASE_URL,
-        viewport = {
-            "width": 1920,
-            "height": 1080
-        }
+        base_url=settings.BASE_URL, viewport={"width": 1920, "height": 1080}
     )
     yield context
     context.close()
 
+
 @pytest.fixture
 def page(context: BrowserContext):
     page = context.new_page()
-    page.set_default_timeout(
-        settings.TIMEOUT
-    )
+    page.set_default_timeout(settings.TIMEOUT)
     yield page
     page.close()

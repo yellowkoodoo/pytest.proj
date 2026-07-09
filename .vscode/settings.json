@@ -1,4 +1,20 @@
 {
+    "editor.formatOnSave": true,
+
+    "editor.autoIndent": "full",
+    "editor.smartIndent": true,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+
     "python.envFile": "${workspaceFolder}/.env",
-    "python.terminal.useEnvFile": true
+    "python.terminal.useEnvFile": true,
+
+    "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports.ruff": "explicit",
+            "source.fixAll.ruff": "explicit"
+        }
+    }
 }

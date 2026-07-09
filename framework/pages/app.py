@@ -17,7 +17,6 @@ class App:
     def top_bar(self):
         return TopBarPanel(self.page)
 
-    # @property 
     @cached_property
     def login(self):
         return LoginPage(self.page)

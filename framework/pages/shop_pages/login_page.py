@@ -9,7 +9,7 @@ class LoginPage(BasePage):
 
     def __init__(self, page: Page):
         super().__init__(page)
-        
+
     @property
     def username_input(self):
         return self._testid("email-input")
@@ -22,6 +22,9 @@ class LoginPage(BasePage):
     def login_button(self):
         return self._testid("login-btn")
 
+    def is_loaded(self):
+        expect(self.login_button).to_be_visible()
+
     def login(self, username: str, password: str):
         self.username_input.fill(username)
         self.password_input.fill(password)
@@ -29,9 +32,6 @@ class LoginPage(BasePage):
 
     def login_as(self, user: User):
         self.login(user.username, user.password)
-
-    def is_loaded(self):
-        expect(self.login_button).to_be_visible()
 
     def expect_login_failed(self, message: str):
         expect(self.error_message).to_have_text(message)

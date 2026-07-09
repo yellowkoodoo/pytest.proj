@@ -15,11 +15,10 @@ class TopBarPanel(BasePage):
     @property
     def logout_button(self):
         return self.nav_panel.get_by_role("button", name="Logout")
-    
+
     @property
     def greeting_text(self):
         return self.nav_panel.locator("span")
-    
 
     def is_loaded(self):
         expect(self.button(Buttons.LOGIN)).to_be_visible()
@@ -34,7 +33,5 @@ class TopBarPanel(BasePage):
 
         if button == Buttons.LOGOUT:
             return self.logout_button.click()
-        
-        return self.button(button).click()
-                
 
+        return self.button(button).click()
