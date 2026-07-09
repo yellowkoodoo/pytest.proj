@@ -2,7 +2,12 @@ import pytest
 from playwright.sync_api import Browser, BrowserContext, Page
 
 from config.settings import runnerSettings, settings
+from framework.pages.app import App
 
+
+@pytest.fixture
+def app(page: Page) -> App:
+    return App(page)
 
 @pytest.fixture(scope="session")
 def base_url():
