@@ -1,4 +1,4 @@
-from framework.models.user import User
+from framework.models.ui.user import User
 
 
 class Users:

@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
 
-from framework.models.user import User
+from framework.models.ui.user import User
 from framework.pages.base.base_page import BasePage
 
 
@@ -33,6 +33,3 @@ class LoginPage(BasePage):
     def login_as(self, user: User):
         self.open()
         self.login(user.email, user.password)
-
-    # def expect_login_failed(self, message: str):
-    #     expect(self.error_message).to_have_text(message)
