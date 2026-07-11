@@ -1,23 +1,14 @@
 import pytest
 
 from framework.data.users import Users
-from framework.enums.top_panel import Buttons
+from framework.enums.pages.pages import Pages
+from framework.pages.app import App
 
 
-# @pytest.mark.debug
-def test_successful_login(app):
+@pytest.mark.smoke
+def test_successful_login(app_no_user: App):
 
-    app.login.open()
-    app.login.is_loaded()
-    app.login.login("alice@example.com", "pass123")
+    app_no_user.top_bar.navigate_to(Pages.LOGIN)
+    app_no_user.login.login_as(Users.ALICE)
 
-    assert "/dashboard" in app.page.url
-
-
-@pytest.mark.debug
-def test_successful_login_2(app):
-
-    app.top_bar.click_button(Buttons.LOGIN)
-    app.login.login_as(Users.ALICE)
-
-    assert "/dashboard" in app.page.url
+    assert "/dashboard" in app_no_user.page.url

@@ -22,7 +22,7 @@ class LoginPage(BasePage):
     def login_button(self):
         return self._testid("login-btn")
 
-    def is_loaded(self):
+    def check_loaded(self):
         expect(self.login_button).to_be_visible()
 
     def login(self, username: str, password: str):
@@ -31,7 +31,8 @@ class LoginPage(BasePage):
         self.login_button.click()
 
     def login_as(self, user: User):
-        self.login(user.username, user.password)
+        self.open()
+        self.login(user.email, user.password)
 
-    def expect_login_failed(self, message: str):
-        expect(self.error_message).to_have_text(message)
+    # def expect_login_failed(self, message: str):
+    #     expect(self.error_message).to_have_text(message)
