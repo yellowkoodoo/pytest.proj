@@ -33,8 +33,6 @@ class TopBarPanel(BasePage):
         expect(self._button(Buttons.PRODUCTS)).to_be_visible()
 
     def navigate_to(self, page: Pages):
-        # self.is_loaded()
-
         button = self._page_to_button_mapping(page)
 
         if button == Buttons.LOGOUT:

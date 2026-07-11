@@ -2,6 +2,7 @@ from functools import cached_property
 
 from playwright.sync_api import Page
 
+from framework.pages.shop_pages.cart_page import CartPage
 from framework.pages.shop_pages.login_page import LoginPage
 from framework.pages.shop_pages.products_page import ProductsPage
 from framework.pages.shop_pages.top_bar_panel import TopBarPanel
@@ -25,3 +26,7 @@ class App:
     @cached_property
     def products(self):
         return ProductsPage(self.page)
+
+    @cached_property
+    def cart(self):
+        return CartPage(self.page)
