@@ -1,14 +1,35 @@
 import pytest
 from playwright.sync_api import Browser, BrowserContext, Page
+from pytest import Config
 
 from config.settings import runnerSettings, settings
+from framework.data.users import Users
 from framework.pages.app import App
+
+# import fixtures from other files
+# pytest_plugins = ["tests.fixtures"]
 
 
 @pytest.fixture
-def app(page: Page) -> App:
+def app_no_user(page: Page) -> App:
     app = App(page)
     app.open()
+    return app
+
+
+@pytest.fixture
+def app_logged_in(page: Page) -> App:
+    app = App(page)
+    app.open()
+    app.login.login_as(Users.ALICE)
+    return app
+
+
+@pytest.fixture
+def app_logged_admin(page: Page) -> App:
+    app = App(page)
+    app.open()
+    app.login.login_as(Users.ADMIN)
     return app
 
 
@@ -20,14 +41,15 @@ def base_url():
 # @pytest.fixture(scope="session")
 # def browser_type_launch_args():
 #     return {
-#         "headless": True,
-#         "slow_mo": 0,
-#         "timeout": 30_000,
-#         "args": [
-#             "--start-maximized",
-#             "--disable-dev-shm-usage",
-#         ],
+#         # "headless": True,
+#         #"slow_mo": 5000,
+#         # "timeout": 30_000,
+#         # "args": [
+#         #     "--start-maximized",
+#         #     "--disable-dev-shm-usage",
+#         # ],
 #     }
+
 
 # @pytest.fixture(scope="session")
 # def browser_context_args(browser_context_args):
@@ -45,13 +67,13 @@ def base_url():
 
 
 @pytest.fixture(scope="session")
-def browser_name(pytestconfig):
+def browser_name(pytestconfig: Config) -> str:
     browser = pytestconfig.getoption("--browser")
 
     if browser:
         return browser
 
-    return runnerSettings.DEFAULT_BROWSER
+    return runnerSettings.DEFAULT_BROWSER.value
 
 
 @pytest.fixture
