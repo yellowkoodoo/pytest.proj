@@ -14,5 +14,16 @@ class CartPage(BasePage):
         return
 
     @property
+    def total_text(self):
+        return self._testid("cart-total")
+
+    @property
+    def checkout_button(self):
+        return self._testid("checkout-btn")
+
+    @property
     def cart_item(self):
         return CartItemPage(self.page)
+
+    def checkout(self):
+        self.checkout_button.click()

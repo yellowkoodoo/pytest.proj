@@ -1,4 +1,5 @@
 import random
+from decimal import Decimal
 
 from faker import Faker
 
@@ -10,16 +11,22 @@ fake = Faker()
 
 class PurchaseGenerator:
     @staticmethod
-    def purchase_item() -> PurchaseItem:
-        return PurchaseItem(
-            item=PurchaseGenerator._item_available(), number=PurchaseGenerator._number()
-        )
+    def purchase_item(count: int) -> list[PurchaseItem]:
+        return [
+            PurchaseItem(
+                item=PurchaseGenerator._item_available(),
+                number=PurchaseGenerator._number(),
+                price=Decimal(0),
+            )
+            for _ in range(count)
+        ]
 
     @staticmethod
     def purchase_item_not_available() -> PurchaseItem:
         return PurchaseItem(
             item=PurchaseGenerator._items_not_available()[0],
             number=PurchaseGenerator._number(),
+            price=Decimal(0),
         )
 
     @staticmethod

@@ -1,29 +1,24 @@
 from playwright.sync_api import Page
 
 from framework.enums.locators import LocatorsMatchOptions
-from framework.models.ui.purchase_item import PurchaseItem
 from framework.pages.base.base_component_page import BaseComponent
-from framework.utils.regex import Regex
 
 
 class OrderItemPage(BaseComponent):
     def __init__(self, page: Page):
         super().__init__(page)
 
-    def add_to_cart(self, item: PurchaseItem):
-        self._add_to_cart_button(item.item.value).click(click_count=item.number)
-
-    def get_item(self, name: str):
-        return self._item_by_name(name)
-
-    def _add_to_cart_button(self, name: str):
+    def get_order_status(self, order: str):
         return self._testid(
-            "add-to-cart",
+            "status-ord",
             match_option=LocatorsMatchOptions.STARTS,
-            parent=self._item_by_name(name),
+            parent=self._order_item(order),
         )
 
-    def _item_by_name(self, name: str):
-        return self.page.locator(
-            ".card", has=self.page.locator("h3", has_text=Regex.exact(name))
+    def view_order(self, order: str):
+        return self._order_item(order).locator("button", has_text="View").click()
+
+    def _order_item(self, order: str):
+        return self._testid(
+            "order-ord", match_option=LocatorsMatchOptions.STARTS, has_text=order
         )
