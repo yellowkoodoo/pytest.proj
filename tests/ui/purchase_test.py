@@ -6,7 +6,7 @@ from framework.models.ui.purchase_item import PurchaseItem
 from framework.utils.data_generation.products_gen import PurchaseGenerator
 
 
-@pytest.mark.debug
+@pytest.mark.smoke
 def test_purchase_credit_card_success(app_logged_in: App):
     items: list[PurchaseItem] = PurchaseGenerator.purchase_item()
     payment: PaymentMethods = PaymentMethods.CreditCard
