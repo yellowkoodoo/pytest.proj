@@ -24,6 +24,17 @@ class Settings:
     def BASE_URL(self):
         return self.BASE_URLS[self.ENV]
 
+    BASE_API_URLS = {
+        "dev": "http://localhost:3001/",
+        "qa": "http://localhost:3001/",
+        "staging": "http://localhost:3001/",
+        "prod": "http://localhost:3001/",
+    }
+
+    @property
+    def BASE_API_URL(self):
+        return self.BASE_API_URLS[self.ENV]
+
     # Playwright settings
     TIMEOUT = int(os.getenv("TIMEOUT", "30000"))
 

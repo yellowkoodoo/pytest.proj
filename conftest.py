@@ -1,10 +1,14 @@
+from collections.abc import Generator
+
 import pytest
-from playwright.sync_api import Browser, BrowserContext, Page
+from playwright.sync_api import Browser, BrowserContext, Page, Playwright
 from pytest import Config
 
 from config.settings import runnerSettings, settings
+from framework.api.auth_api import AuthApi
 from framework.data.users import Users
 from framework.pages.app import App
+from framework.utils.user_session.session import read_session
 
 # import fixtures from other files
 # pytest_plugins = ["tests.fixtures"]
@@ -18,11 +22,37 @@ def app_no_user(page: Page) -> App:
 
 
 @pytest.fixture
-def app_logged_in(page: Page) -> App:
+def app_logged_in_v0(page: Page) -> App:
     app = App(page)
     app.open()
     app.login.login_as(Users.ALICE)
     return app
+
+
+@pytest.fixture
+def app_logged_in(playwright: Playwright, page: Page) -> Generator[App]:
+
+    BASE_API_URL = settings.BASE_API_URL
+    request = playwright.request.new_context(base_url=BASE_API_URL)
+    auth = AuthApi(request)
+
+    user = Users.ALICE
+    auth.login(user)
+
+    token = read_session()
+    page.add_init_script(
+        f"""
+        window.localStorage.setItem("token", "{token}");
+        """
+    )
+
+    app = App(page)
+    app.open()
+
+    try:
+        yield app
+    finally:
+        auth.logout(user)
 
 
 @pytest.fixture
