@@ -1,23 +1,27 @@
 import pytest
-from playwright.sync_api import expect
 
-from framework.enums.pages.pages import Pages
+from framework.core.app import App
+from framework.enums.shop.payment_methods import PaymentMethods
 from framework.models.ui.purchase_item import PurchaseItem
-from framework.pages.app import App
-from framework.utils.data_generation.products_gen import UserGenerator
+from framework.utils.data_generation.products_gen import PurchaseGenerator
 
 
 @pytest.mark.debug
-def test_purchase_success(app_logged_in: App):
-    item: PurchaseItem = UserGenerator.purchase_item()
+def test_purchase_credit_card_success(app_logged_in: App):
+    count: int = 2
+    items: list[PurchaseItem] = PurchaseGenerator.purchase_item(count)
+    payment: PaymentMethods = PaymentMethods.CreditCard
 
-    app_logged_in.top_bar.navigate_to(Pages.PRODUCTS)
-    app_logged_in.products.product_item.add_to_cart(item)
-    expect(app_logged_in.top_bar.cart_items).to_have_text(str(item.number))
+    items = PurchaseGenerator.purchase_item(2)
 
-    app_logged_in.top_bar.navigate_to(Pages.CART)
-    expect(app_logged_in.cart.cart_item.get_quantity(item)).to_have_text(
-        str(item.number)
-    )
+    app_logged_in.FLOWS.purchase.add_items(items)
+
+    app_logged_in.FLOWS.cart.verify(items)
+    app_logged_in.FLOWS.cart.checkout()
+
+    order_id = app_logged_in.FLOWS.checkout.place_order(payment)
+
+    app_logged_in.FLOWS.order.verify_success()
+    app_logged_in.FLOWS.order.open(order_id)
 
     app_logged_in.page.pause()

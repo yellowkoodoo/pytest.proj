@@ -19,4 +19,4 @@ class App:
 
     @cached_property
     def FLOWS(self):
-        return AppFlows(self.page)
+        return AppFlows(self.PAGES)
