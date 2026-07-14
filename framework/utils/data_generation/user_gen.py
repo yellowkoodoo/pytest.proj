@@ -8,4 +8,6 @@ fake = Faker()
 class UserGenerator:
     @staticmethod
     def create_user() -> User:
-        return User(email=fake.unique.email(), password=fake.password())
+        return User(
+            name=fake.name(), email=fake.unique.email(), password=fake.password()
+        )

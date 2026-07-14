@@ -10,11 +10,13 @@ from framework.utils.data_generation.user_gen import UserGenerator
 
 @pytest.mark.smoke
 def test_successful_login(app_no_user: App):
+    user = Users.ALICE
 
     app_no_user.top_bar.navigate_to(Pages.LOGIN)
-    app_no_user.login.login_as(Users.ALICE)
+    app_no_user.login.login_as(user)
 
-    assert "/dashboard" in app_no_user.page.url
+    greeting: str = f"Hi, {user.name}"
+    expect(app_no_user.top_bar.greeting_text).to_have_text(greeting)
 
 
 @pytest.mark.smoke
