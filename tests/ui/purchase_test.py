@@ -8,11 +8,8 @@ from framework.utils.data_generation.products_gen import PurchaseGenerator
 
 @pytest.mark.debug
 def test_purchase_credit_card_success(app_logged_in: App):
-    count: int = 2
-    items: list[PurchaseItem] = PurchaseGenerator.purchase_item(count)
+    items: list[PurchaseItem] = PurchaseGenerator.purchase_item()
     payment: PaymentMethods = PaymentMethods.CreditCard
-
-    items = PurchaseGenerator.purchase_item(2)
 
     app_logged_in.FLOWS.purchase.add_items(items)
 

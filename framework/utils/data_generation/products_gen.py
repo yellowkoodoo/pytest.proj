@@ -11,7 +11,9 @@ fake = Faker()
 
 class PurchaseGenerator:
     @staticmethod
-    def purchase_item(count: int) -> list[PurchaseItem]:
+    def purchase_item(count: int = 0) -> list[PurchaseItem]:
+        if count == 0:
+            count = fake.random_int(2, 3)
         return [
             PurchaseItem(
                 item=PurchaseGenerator._item_available(),
