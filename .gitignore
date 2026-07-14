@@ -9,3 +9,4 @@ config/.env.*
 # Playwright
 test-results/
 playwright-report/
+artifacts/

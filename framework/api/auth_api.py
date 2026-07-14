@@ -2,8 +2,8 @@ from playwright.sync_api import APIRequestContext
 
 from framework.data.users import User
 from framework.models.api.responses.login_response import LoginResponse
-from framework.utils.user_session.request import create_headers
-from framework.utils.user_session.session import (
+from framework.utils.session.request import create_headers
+from framework.utils.session.session import (
     dispose_session,
     read_session,
     store_session,

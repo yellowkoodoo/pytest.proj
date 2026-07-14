@@ -8,7 +8,7 @@ from config.settings import runnerSettings, settings
 from framework.api.auth_api import AuthApi
 from framework.data.users import Users
 from framework.pages.app import App
-from framework.utils.user_session.session import read_session
+from framework.utils.session.session import read_session
 
 # import fixtures from other files
 # pytest_plugins = ["tests.fixtures"]
