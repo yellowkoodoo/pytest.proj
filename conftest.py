@@ -6,8 +6,8 @@ from pytest import Config
 
 from config.settings import runnerSettings, settings
 from framework.api.auth_api import AuthApi
+from framework.core.app import App
 from framework.data.users import Users
-from framework.pages.app import App
 from framework.utils.session.session import read_session
 
 # import fixtures from other files
@@ -25,7 +25,7 @@ def app_no_user(page: Page) -> App:
 def app_logged_in_v0(page: Page) -> App:
     app = App(page)
     app.open()
-    app.login.login_as(Users.ALICE)
+    app.PAGES.login.login_as(Users.ALICE)
     return app
 
 
@@ -59,7 +59,7 @@ def app_logged_in(playwright: Playwright, page: Page) -> Generator[App]:
 def app_logged_admin(page: Page) -> App:
     app = App(page)
     app.open()
-    app.login.login_as(Users.ADMIN)
+    app.PAGES.login.login_as(Users.ADMIN)
     return app
 
 

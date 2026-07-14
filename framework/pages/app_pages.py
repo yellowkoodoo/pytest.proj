@@ -4,11 +4,14 @@ from playwright.sync_api import Page
 
 from framework.pages.shop_pages.cart_page import CartPage
 from framework.pages.shop_pages.login_page import LoginPage
+from framework.pages.shop_pages.my_orders_page import MyOrdersPage
+from framework.pages.shop_pages.order_process.checkout_page import CheckoutPage
+from framework.pages.shop_pages.order_process.order_success_page import OrderSuccessPage
 from framework.pages.shop_pages.products_page import ProductsPage
 from framework.pages.shop_pages.top_bar_panel import TopBarPanel
 
 
-class App:
+class AppPages:
     def __init__(self, page: Page):
         self.page = page
 
@@ -30,3 +33,24 @@ class App:
     @cached_property
     def cart(self):
         return CartPage(self.page)
+
+    @cached_property
+    def checkout(self):
+        return CheckoutPages(self.page)
+
+    @cached_property
+    def my_orders(self):
+        return MyOrdersPage(self.page)
+
+
+class CheckoutPages:
+    def __init__(self, page: Page):
+        self.page = page
+
+    @cached_property
+    def make_checkout(self):
+        return CheckoutPage(self.page)
+
+    @cached_property
+    def order_success(self):
+        return OrderSuccessPage(self.page)
