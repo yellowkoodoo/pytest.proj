@@ -23,9 +23,6 @@ class AuthApi:
             },
         )
 
-        print("response.url")
-        print(response.url)
-
         if not response.ok:
             raise RuntimeError(f"Login failed: {response.status} {response.text()}")
 
