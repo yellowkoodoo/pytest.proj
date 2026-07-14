@@ -22,6 +22,10 @@ class LoginPage(BasePage):
     def login_button(self):
         return self._testid("login-btn")
 
+    @property
+    def login_error(self):
+        return self._testid("login-error")
+
     def check_loaded(self):
         expect(self.login_button).to_be_visible()
 

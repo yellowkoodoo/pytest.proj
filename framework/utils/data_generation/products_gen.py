@@ -8,17 +8,18 @@ from framework.models.ui.purchase_item import PurchaseItem
 fake = Faker()
 
 
-class UserGenerator:
+class PurchaseGenerator:
     @staticmethod
     def purchase_item() -> PurchaseItem:
         return PurchaseItem(
-            item=UserGenerator._item_available(), number=UserGenerator._number()
+            item=PurchaseGenerator._item_available(), number=PurchaseGenerator._number()
         )
 
     @staticmethod
     def purchase_item_not_available() -> PurchaseItem:
         return PurchaseItem(
-            item=UserGenerator._items_not_available()[0], number=UserGenerator._number()
+            item=PurchaseGenerator._items_not_available()[0],
+            number=PurchaseGenerator._number(),
         )
 
     @staticmethod
@@ -36,9 +37,11 @@ class UserGenerator:
     @staticmethod
     def _items_available():
         return [
-            item for item in Goods if item not in UserGenerator._items_not_available()
+            item
+            for item in Goods
+            if item not in PurchaseGenerator._items_not_available()
         ]
 
     @staticmethod
     def _item_available():
-        return random.choice(UserGenerator._items_available())
+        return random.choice(PurchaseGenerator._items_available())
