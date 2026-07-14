@@ -1,0 +1,75 @@
+name: pytest.proj (docker pages)
+
+on:
+    workflow_dispatch:
+        inputs:
+            project:
+                description: "Project to run (e.g. e2e)"
+                required: false
+                default: "e2e"
+                type: string
+
+jobs:
+    test:
+        timeout-minutes: 30
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Start QA sandbox
+              run: |
+                  cd qa-sandbox
+                  docker compose up -d
+                  cd ..
+              # docker compose -f qa-sandbox/docker-compose.yml up -d
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run Tests
+              run: npx playwright test
+
+            - name: Shutdown services
+              if: always()
+              run: |
+                  cd qa-sandbox
+                  docker compose down
+
+            - name: Upload report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: playwright-report
+                  path: playwright-report/
+                  retention-days: 30
+
+    deploy-artifacts:
+        runs-on: ubuntu-latest
+        needs: test
+
+        permissions:
+            pages: write
+            id-token: write
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Download artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: playwright-report
+                  path: out
+
+            - name: Setup pages
+              uses: actions/configure-pages@v5
+
+            - name: Upload artifact to pages
+              uses: actions/upload-pages-artifact@v3
+              with:
+                  path: out
+
+            - name: Deploy to GitHub Pages
+              uses: actions/deploy-pages@v4
