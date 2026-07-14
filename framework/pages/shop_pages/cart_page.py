@@ -11,7 +11,6 @@ class CartPage(BasePage):
         super().__init__(page)
 
     def check_loaded(self):
-        # expect(self.login_button).to_be_visible()
         return
 
     @property

@@ -6,7 +6,7 @@ from framework.pages.base.base_component_page import BaseComponent
 from framework.utils.regex import Regex
 
 
-class ProductItemPage(BaseComponent):
+class OrderItemPage(BaseComponent):
     def __init__(self, page: Page):
         super().__init__(page)
 
